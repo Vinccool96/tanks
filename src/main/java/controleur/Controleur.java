@@ -23,6 +23,6 @@ public class Controleur {
     public void keyPressed(KeyEvent key) {
         System.out.println("key pressed");
         if (key.getCode() == KeyCode.W)
-            rect.setY(rect.getY() + 1);
+            rect.setY(rect.getY() - 1);
     }
 }
