@@ -5,8 +5,6 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="pane" onKeyPressed="#keyPressed" prefHeight="400.0"
             prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea"
             fx:controller="controleur.Controleur">
-    <children>
-        <Rectangle fx:id="rect" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutX="288.0"
-                   layoutY="175.0" stroke="BLACK" strokeType="INSIDE" width="25.0"/>
-    </children>
+    <Rectangle fx:id="rect" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutX="288.0"
+               layoutY="175.0" stroke="BLACK" strokeType="INSIDE" width="25.0"/>
 </AnchorPane>

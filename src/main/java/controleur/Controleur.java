@@ -22,7 +22,8 @@ public class Controleur {
     @FXML
     public void keyPressed(KeyEvent key) {
         System.out.println("key pressed");
-        if (key.getCode() == KeyCode.W)
+        if (key.getCode() == KeyCode.W) {
             rect.setY(rect.getY() - 1);
+        }
     }
 }
