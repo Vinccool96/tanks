@@ -14,15 +14,15 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-		try {
-			FXMLLoader loader = new FXMLLoader(App.class.getResource("/View.fxml"));
-			Parent root = loader.load();
-			Scene s = new Scene(root);
-			s.getRoot().requestFocus();
-			primaryStage.setScene(s);
-			primaryStage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        try {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("/View.fxml"));
+            Parent root = loader.load();
+            Scene s = new Scene(root);
+            s.getRoot().requestFocus();
+            primaryStage.setScene(s);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
