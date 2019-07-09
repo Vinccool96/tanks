@@ -6,8 +6,15 @@ public class Tank {
     private double rightSpeed = 0;
     private double posX = 0.0;
     private double posY = 0.0;
+    private double width = 3.37;
 
     public Tank() {
+    }
+
+    public Tank(double orientation, double posX, double posY) {
+        this.orientation = orientation;
+        this.posX = posX;
+        this.posY = posY;
     }
 
     public double getOrientation() {
@@ -26,8 +33,8 @@ public class Tank {
         this.leftSpeed = leftSpeed;
     }
 
-    public void setLeftSpeed(float leftSpeedFloat) {
-        double leftSpeed = (((double) leftSpeedFloat) * 10.0);
+    public void setLeftSpeed(float leftAxisXDelta) {
+        double leftSpeed = (((double) leftAxisXDelta) * 10.0);
         setLeftSpeed(leftSpeed);
     }
 
@@ -39,8 +46,8 @@ public class Tank {
         this.rightSpeed = rightSpeed;
     }
 
-    public void setRightSpeed(float rightSpeedFloat) {
-        double rightSpeed = (((double) rightSpeedFloat) * 10.0);
+    public void setRightSpeed(float rightAxisXDelta) {
+        double rightSpeed = (((double) rightAxisXDelta) * 10.0);
         setRightSpeed(rightSpeed);
     }
 
@@ -60,4 +67,11 @@ public class Tank {
         this.posY = posY;
     }
 
+    public double getWidth() {
+        return width;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
 }
