@@ -2,18 +2,23 @@ package game;
 
 import game.movement.RotateTank;
 import game.movement.TranslateTank;
-import javafx.scene.shape.Rectangle;
 import models.Tank;
 
 public class MoveTank {
 
-    public static void move(Tank tank, Rectangle rect, float leftAxisXDelta, float rightAxisXDelta) {
+    public static final double TIME_OF_STEP = 0.1;
+
+    public static void move(Tank tank, float leftAxisXDelta, float rightAxisXDelta) {
         setSpeed(tank, leftAxisXDelta, rightAxisXDelta);
+        movement(tank);
     }
 
     private static void setSpeed(Tank tank, float leftAxisXDelta, float rightAxisXDelta) {
         tank.setLeftSpeed(leftAxisXDelta);
         tank.setRightSpeed(rightAxisXDelta);
+    }
+
+    private static void movement(Tank tank) {
         if (isTranslating(tank)) {
             TranslateTank.translate(tank);
         } else {

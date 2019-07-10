@@ -48,9 +48,12 @@ public class Controleur {
                 float rightAxisXDelta = axes.ry;
                 System.out.println("leftAxisXDelta: " + leftAxisXDelta);
                 System.out.println("rightAxisXDelta: " + rightAxisXDelta);
-                MoveTank.move(tank, rect, leftAxisXDelta, rightAxisXDelta);
+                MoveTank.move(tank, leftAxisXDelta, rightAxisXDelta);
+                rect.setRotate(tank.getOrientation());
+                rect.setLayoutX(tank.getPosX());
+                rect.setLayoutY(tank.getPosY());
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep((long) (MoveTank.TIME_OF_STEP * 1000));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -68,6 +71,14 @@ public class Controleur {
     }
 
     private void initializeTank(Rectangle rect) {
-        tank = new Tank(rect.getRotate(), rect.getLayoutX(), rect.getLayoutY());
+        double x = rect.getLayoutX() + (rect.getWidth() / 2);
+        double y = rect.getLayoutY() + (rect.getHeight() / 2);
+        tank = new Tank(rect.getRotate(), x, y, rect.getWidth(), rect.getHeight());
+    }
+
+    private void toRectangle() {
+        rect.setRotate(tank.getOrientation());
+        rect.setLayoutX(tank.getPosX() - (rect.getWidth() / 2));
+        rect.setLayoutY(tank.getPosY() - (rect.getHeight() / 2));
     }
 }
