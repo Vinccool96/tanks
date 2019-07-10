@@ -33,7 +33,7 @@ public class PhysicsVector {
     }
 
     public void setOrientation(double orientation) {
-        this.orientation = orientation;
+        this.orientation = orientation < 0 ? (-orientation) % 360.0 : orientation % 360.0;
         this.x = this.magnitude * Math.cos(Math.toRadians(orientation));
         this.y = this.magnitude * Math.sin(Math.toRadians(orientation));
     }
@@ -43,9 +43,9 @@ public class PhysicsVector {
     }
 
     public void setMagnitude(double magnitude) {
-        this.magnitude = magnitude;
-        this.x = this.magnitude * Math.cos(Math.toRadians(orientation));
-        this.y = this.magnitude * Math.sin(Math.toRadians(orientation));
+        this.magnitude = magnitude < 0 ? -magnitude : magnitude;
+        this.x = magnitude * Math.cos(Math.toRadians(this.orientation));
+        this.y = magnitude * Math.sin(Math.toRadians(this.orientation));
     }
 
     public double getX() {
