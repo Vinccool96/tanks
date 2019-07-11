@@ -38,7 +38,8 @@ public class Tank {
 
     public void setLeftSpeed(float leftAxisXDelta) {
         double leftSpeed = (((double) leftAxisXDelta) * 10.0);
-        setLeftSpeed(leftSpeed - (leftSpeed % 1.0));
+        double l = leftSpeed - (leftSpeed % 1.0);
+        setLeftSpeed(l / 10.0);
     }
 
     public double getRightSpeed() {
@@ -51,7 +52,8 @@ public class Tank {
 
     public void setRightSpeed(float rightAxisXDelta) {
         double rightSpeed = (((double) rightAxisXDelta) * 10.0);
-        setRightSpeed(rightSpeed - (rightSpeed % 1.0));
+        double r = rightSpeed - (rightSpeed % 1.0);
+        setRightSpeed(r / 10.0);
     }
 
     public double getPosX() {

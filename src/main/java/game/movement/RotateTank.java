@@ -32,21 +32,29 @@ public class RotateTank {
     }
 
     private static double getAngularVelocity(double radius, double leftSpeed, double rightSpeed) {
-        double angularVelocity = (rightSpeed + leftSpeed) / (2 * radius);
-        return angularVelocity;
+        double angularVelocityAsRad = (rightSpeed + leftSpeed) / (2 * radius);
+        double angularVelocity = Math.toDegrees(angularVelocityAsRad);
+        return leftSpeed > rightSpeed ? -angularVelocity : angularVelocity;
     }
 
     private static PhysicsVector getRadiusVector(double radius, double orientation) {
         PhysicsVector vector = new PhysicsVector();
         double nextOrientation = radius < 0 ? orientation + 90 : orientation - 90;
+        if (radius < 0) {
+            radius = -radius;
+        }
         vector.setVectorMagnitude(nextOrientation, radius);
         return vector;
     }
 
     private static PhysicsVector getNextVector(PhysicsVector vector, double angularVelocity) {
         PhysicsVector nextVector = new PhysicsVector();
-        double nextOrientation = vector.getOrientation() + Math.toDegrees(angularVelocity * MoveTank.TIME_OF_STEP);
+        double nextOrientation = vector.getOrientation() + (angularVelocity * MoveTank.TIME_OF_STEP);
         nextVector.setVectorMagnitude(nextOrientation, vector.getMagnitude());
         return nextVector;
+    }
+
+    private static double nextOrientation(double radius, double orientation){
+        return radius < 0 ? orientation - 90 : orientation + 90;
     }
 }
