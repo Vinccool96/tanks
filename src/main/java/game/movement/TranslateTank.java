@@ -10,7 +10,8 @@ public class TranslateTank {
         double speed = tank.getLeftSpeed();
         double distanceTraveled = speed * MoveTank.TIME_OF_STEP;
         PhysicsVector vector = new PhysicsVector();
-        vector.setVectorMagnitude(tank.getOrientation(), distanceTraveled);
+        double orientation = speed < 0 ? -tank.getOrientation() : tank.getOrientation();
+        vector.setVectorMagnitude(orientation, distanceTraveled);
         tank.setPosX(tank.getPosX() + vector.getX());
         tank.setPosY(tank.getPosY() + vector.getY());
     }
