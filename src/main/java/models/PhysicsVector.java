@@ -69,6 +69,11 @@ public class PhysicsVector {
 //        this.magnitude = Math.pow(this.x * this.x + y * y, 0.5);
 //    }
 
+    public void turn180Degrees(){
+        double newOrientation = this.orientation+180;
+        setVectorMagnitude(newOrientation, this.magnitude);
+    }
+
     private void setXY() {
         double xTemp = this.magnitude * Math.cos(Math.toRadians(this.orientation));
         this.x = xTemp - (xTemp % 1E-11);

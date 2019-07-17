@@ -10,9 +10,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
+import models.RelativeCoordinates;
 import models.Tank;
+import utils.Angles;
 
 public class Controleur {
+
+    private boolean running;
 
     @FXML
     Rectangle rect;
@@ -21,6 +25,11 @@ public class Controleur {
     AnchorPane pane;
 
     private Tank tank;
+
+    private RelativeCoordinates relativeCoordinates = new RelativeCoordinates();
+
+    public Controleur() {
+    }
 
     @FXML
     public void initialize() {
@@ -40,18 +49,18 @@ public class Controleur {
     }
 
     private void launch(XInputDevice device) {
+        this.running = true;
         Runnable r = () -> {
-            while (device.poll()) {
+            while (this.running) { // while (device.poll() && running) {
                 XInputComponents components = device.getComponents();
                 XInputAxes axes = components.getAxes();
-                float leftAxisXDelta = axes.ly;
-                float rightAxisXDelta = axes.ry;
+                float leftAxisXDelta = 1.0f; //float leftAxisXDelta = axes.ly;
+                float rightAxisXDelta = 0.0f; //float rightAxisXDelta = axes.ry;
                 System.out.println("leftAxisXDelta: " + leftAxisXDelta);
                 System.out.println("rightAxisXDelta: " + rightAxisXDelta);
-                MoveTank.move(tank, leftAxisXDelta, rightAxisXDelta);
-                rect.setRotate(tank.getOrientation());
-                rect.setLayoutX(tank.getPosX());
-                rect.setLayoutY(tank.getPosY());
+                relativeCoordinates.reset();
+                MoveTank.move(tank, leftAxisXDelta, rightAxisXDelta, relativeCoordinates);
+                toRectangle();
                 try {
                     Thread.sleep((long) (MoveTank.TIME_OF_STEP * 1000));
                 } catch (InterruptedException e) {
@@ -73,12 +82,17 @@ public class Controleur {
     private void initializeTank(Rectangle rect) {
         double x = rect.getLayoutX() + (rect.getWidth() / 2);
         double y = rect.getLayoutY() + (rect.getHeight() / 2);
-        tank = new Tank(rect.getRotate(), x, y, rect.getWidth(), rect.getHeight());
+        tank = new Tank(rect.getRotate(), rect.getWidth(), rect.getHeight());
+        tank.setLeftSpeed(1.0f);
     }
 
     private void toRectangle() {
-        rect.setRotate(tank.getOrientation());
-        rect.setLayoutX(tank.getPosX() - (rect.getWidth() / 2));
-        rect.setLayoutY(tank.getPosY() - (rect.getHeight() / 2));
+        rect.setRotate(Angles.angle(-tank.getOrientation()));
+        rect.setLayoutX(relativeCoordinates.getFxX() + rect.getLayoutX());
+        rect.setLayoutX(relativeCoordinates.getFxY() + rect.getLayoutY());
+    }
+
+    public void stopRunning() {
+        this.running = false;
     }
 }

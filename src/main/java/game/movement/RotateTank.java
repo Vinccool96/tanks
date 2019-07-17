@@ -2,23 +2,24 @@ package game.movement;
 
 import game.MoveTank;
 import models.PhysicsVector;
+import models.RelativeCoordinates;
 import models.Tank;
 
 public class RotateTank {
 
-    public static void rotate(Tank tank) {
+    public static void rotate(Tank tank, RelativeCoordinates relativeCoordinates) {
         double width = tank.getWidth();
         double leftSpeed = tank.getLeftSpeed();
         double rightSpeed = tank.getRightSpeed();
         double radius = getRadius(width, leftSpeed, rightSpeed);
         double angularVelocity = getAngularVelocity(radius, leftSpeed, rightSpeed);
-        PhysicsVector vector = getRadiusVector(radius, tank.getOrientation());
-        double rotationPointX = tank.getPosX() + vector.getX();
-        double rotationPointY = tank.getPosY() + vector.getY();
-        PhysicsVector nextVector = getNextVector(vector, angularVelocity);
-        tank.setPosX(rotationPointX + nextVector.getX());
-        tank.setPosY(rotationPointY + nextVector.getY());
-        tank.setOrientation(nextVector.getOrientation());
+        PhysicsVector radiusVector = getRadiusVector(radius, tank.getOrientation());
+        double rotationPointX = radiusVector.getX();
+        double rotationPointY = radiusVector.getY();
+        PhysicsVector nextVector = getNextVector(radiusVector, angularVelocity);
+        relativeCoordinates.setCalcX(rotationPointX + nextVector.getX());
+        relativeCoordinates.setCalcY(rotationPointY + nextVector.getY());
+        tank.setOrientation(nextOrientation(radius, nextVector.getOrientation()));
     }
 
     private static double getRadius(double width, double leftSpeed, double rightSpeed) {
@@ -38,23 +39,24 @@ public class RotateTank {
     }
 
     private static PhysicsVector getRadiusVector(double radius, double orientation) {
-        PhysicsVector vector = new PhysicsVector();
+        PhysicsVector radiusVector = new PhysicsVector();
         double nextOrientation = radius < 0 ? orientation + 90 : orientation - 90;
         if (radius < 0) {
             radius = -radius;
         }
-        vector.setVectorMagnitude(nextOrientation, radius);
-        return vector;
+        radiusVector.setVectorMagnitude(nextOrientation, radius);
+        return radiusVector;
     }
 
-    private static PhysicsVector getNextVector(PhysicsVector vector, double angularVelocity) {
+    private static PhysicsVector getNextVector(PhysicsVector radiusVector, double angularVelocity) {
+        radiusVector.turn180Degrees();
         PhysicsVector nextVector = new PhysicsVector();
-        double nextOrientation = vector.getOrientation() + (angularVelocity * MoveTank.TIME_OF_STEP);
-        nextVector.setVectorMagnitude(nextOrientation, vector.getMagnitude());
+        double nextOrientation = radiusVector.getOrientation() + (angularVelocity * MoveTank.TIME_OF_STEP);
+        nextVector.setVectorMagnitude(nextOrientation, radiusVector.getMagnitude());
         return nextVector;
     }
 
-    private static double nextOrientation(double radius, double orientation){
-        return radius < 0 ? orientation - 90 : orientation + 90;
+    private static double nextOrientation(double radius, double orientation) {
+        return radius < 0 ? orientation + 90 : orientation - 90;
     }
 }

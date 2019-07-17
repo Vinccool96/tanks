@@ -2,15 +2,17 @@ package game;
 
 import game.movement.RotateTank;
 import game.movement.TranslateTank;
+import models.RelativeCoordinates;
 import models.Tank;
 
 public class MoveTank {
 
     public static final double TIME_OF_STEP = 0.1;
 
-    public static void move(Tank tank, float leftAxisXDelta, float rightAxisXDelta) {
+    public static void move(Tank tank, float leftAxisXDelta, float rightAxisXDelta,
+            RelativeCoordinates relativeCoordinates) {
         setSpeed(tank, leftAxisXDelta, rightAxisXDelta);
-        movement(tank);
+        movement(tank, relativeCoordinates);
     }
 
     private static void setSpeed(Tank tank, float leftAxisXDelta, float rightAxisXDelta) {
@@ -18,11 +20,11 @@ public class MoveTank {
         tank.setRightSpeed(rightAxisXDelta);
     }
 
-    private static void movement(Tank tank) {
+    private static void movement(Tank tank,RelativeCoordinates relativeCoordinates) {
         if (isTranslating(tank)) {
-            TranslateTank.translate(tank);
+            TranslateTank.translate(tank,relativeCoordinates);
         } else {
-            RotateTank.rotate(tank);
+            RotateTank.rotate(tank,relativeCoordinates);
         }
     }
 
