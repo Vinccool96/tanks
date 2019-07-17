@@ -20,7 +20,5 @@ public class RotateTankTest {
         tank.setLeftSpeed(1.0f);
         assertTrue(tank.getLeftSpeed() == 1.0);
         assertTrue(tank.getRightSpeed() == 0.0);
-        RotateTank.rotate(tank);
-        RotateTank.rotate(tank);
     }
 }

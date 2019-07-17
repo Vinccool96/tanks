@@ -55,7 +55,7 @@ public class Controleur {
                 XInputComponents components = device.getComponents();
                 XInputAxes axes = components.getAxes();
                 float leftAxisXDelta = 1.0f; //float leftAxisXDelta = axes.ly;
-                float rightAxisXDelta = 0.0f; //float rightAxisXDelta = axes.ry;
+                float rightAxisXDelta = 1.0f; //float rightAxisXDelta = axes.ry;
                 System.out.println("leftAxisXDelta: " + leftAxisXDelta);
                 System.out.println("rightAxisXDelta: " + rightAxisXDelta);
                 relativeCoordinates.reset();
@@ -80,8 +80,6 @@ public class Controleur {
     }
 
     private void initializeTank(Rectangle rect) {
-        double x = rect.getLayoutX() + (rect.getWidth() / 2);
-        double y = rect.getLayoutY() + (rect.getHeight() / 2);
         tank = new Tank(rect.getRotate(), rect.getWidth(), rect.getHeight());
         tank.setLeftSpeed(1.0f);
     }
