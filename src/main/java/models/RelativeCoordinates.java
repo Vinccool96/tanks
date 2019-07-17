@@ -37,7 +37,7 @@ public class RelativeCoordinates {
         return fxY;
     }
 
-    public void reset(){
+    public void reset() {
         this.calcX = 0.0;
         this.calcY = 0.0;
         this.setFX();

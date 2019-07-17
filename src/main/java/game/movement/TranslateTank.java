@@ -13,7 +13,7 @@ public class TranslateTank {
         double orientation = speed < 0 ? -tank.getOrientation() : tank.getOrientation();
         PhysicsVector vector = new PhysicsVector();
         vector.setVectorMagnitude(orientation, distanceTraveled);
-        relativeCoordinates.setCalcX(vector.getX()*10);
-        relativeCoordinates.setCalcY(vector.getY()*10);
+        relativeCoordinates.setCalcX(vector.getX());
+        relativeCoordinates.setCalcY(vector.getY());
     }
 }

@@ -16,14 +16,11 @@ import utils.Angles;
 
 public class Controleur {
 
-    private boolean running;
-
     @FXML
     Rectangle rect;
-
     @FXML
     AnchorPane pane;
-
+    private boolean running;
     private Tank tank;
 
     private RelativeCoordinates relativeCoordinates = new RelativeCoordinates();
@@ -33,19 +30,6 @@ public class Controleur {
 
     @FXML
     public void initialize() {
-        // Retrieve all devices
-        XInputDevice[] devices = new XInputDevice[0];
-        try {
-            devices = XInputDevice.getAllDevices();
-        } catch (XInputNotLoadedException e) {
-            e.printStackTrace();
-        }
-        initializeTank(rect);
-        // Retrieve the device for player 1
-        XInputDevice device = devices[0]; // or XInputDevice.getDeviceFor(0)
-
-        launch(device);
-
     }
 
     private void launch(XInputDevice device) {
@@ -55,7 +39,7 @@ public class Controleur {
                 XInputComponents components = device.getComponents();
                 XInputAxes axes = components.getAxes();
                 float leftAxisXDelta = 1.0f; //float leftAxisXDelta = axes.ly;
-                float rightAxisXDelta = 1.0f; //float rightAxisXDelta = axes.ry;
+                float rightAxisXDelta = -1.0f; //float rightAxisXDelta = axes.ry;
                 System.out.println("leftAxisXDelta: " + leftAxisXDelta);
                 System.out.println("rightAxisXDelta: " + rightAxisXDelta);
                 relativeCoordinates.reset();
@@ -86,8 +70,23 @@ public class Controleur {
 
     private void toRectangle() {
         rect.setRotate(Angles.angle(-tank.getOrientation()));
-        rect.setLayoutX(relativeCoordinates.getFxX() + rect.getLayoutX());
-        rect.setLayoutX(relativeCoordinates.getFxY() + rect.getLayoutY());
+        rect.setX(relativeCoordinates.getFxX() + rect.getX());
+        rect.setY(relativeCoordinates.getFxY() + rect.getY());
+    }
+
+    public void startRunning() {
+        initializeTank(rect);
+        // Retrieve all
+        XInputDevice[] devices = new XInputDevice[0];
+        try {
+            devices = XInputDevice.getAllDevices();
+        } catch (XInputNotLoadedException e) {
+            e.printStackTrace();
+        }
+        // Retrieve the device for player 1
+        XInputDevice device = devices[0]; // or XInputDevice.getDeviceFor(0)
+
+        launch(device);
     }
 
     public void stopRunning() {

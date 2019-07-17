@@ -12,8 +12,8 @@ public class RotateTank {
         double leftSpeed = tank.getLeftSpeed();
         double rightSpeed = tank.getRightSpeed();
         double radius = getRadius(width, leftSpeed, rightSpeed);
-        double angularVelocity = getAngularVelocity(radius, leftSpeed, rightSpeed);
-        PhysicsVector radiusVector = getRadiusVector(radius, tank.getOrientation());
+        double angularVelocity = getAngularVelocity(radius, leftSpeed, rightSpeed, width);
+        PhysicsVector radiusVector = getRadiusVector(radius, tank.getOrientation(), leftSpeed, rightSpeed);
         double rotationPointX = radiusVector.getX();
         double rotationPointY = radiusVector.getY();
         PhysicsVector nextVector = getNextVector(radiusVector, angularVelocity);
@@ -24,7 +24,9 @@ public class RotateTank {
 
     private static double getRadius(double width, double leftSpeed, double rightSpeed) {
         double radius;
-        if (leftSpeed > rightSpeed) {
+        if (leftSpeed == -rightSpeed) {
+            radius = 0;
+        } else if (leftSpeed > rightSpeed) {
             radius = (width / 2) * ((leftSpeed + rightSpeed) / (leftSpeed - rightSpeed));
         } else {
             radius = -(width / 2) * ((rightSpeed + leftSpeed) / (rightSpeed - leftSpeed));
@@ -32,16 +34,17 @@ public class RotateTank {
         return radius;
     }
 
-    private static double getAngularVelocity(double radius, double leftSpeed, double rightSpeed) {
-        double angularVelocityAsRad = (rightSpeed + leftSpeed) / (2 * radius);
+    private static double getAngularVelocity(double radius, double leftSpeed, double rightSpeed, double width) {
+        double angularVelocityAsRad = radius != 0 ? (rightSpeed + leftSpeed) / (2 * radius) : (2 * leftSpeed) / width;
         double angularVelocity = Math.toDegrees(angularVelocityAsRad);
         return leftSpeed > rightSpeed ? -angularVelocity : angularVelocity;
     }
 
-    private static PhysicsVector getRadiusVector(double radius, double orientation) {
+    private static PhysicsVector getRadiusVector(double radius, double orientation, double leftSpeed,
+            double rightSpeed) {
         PhysicsVector radiusVector = new PhysicsVector();
         double nextOrientation = radius < 0 ? orientation + 90 : orientation - 90;
-        if (radius < 0) {
+        if (leftSpeed < rightSpeed) {
             radius = -radius;
         }
         radiusVector.setVectorMagnitude(nextOrientation, radius);

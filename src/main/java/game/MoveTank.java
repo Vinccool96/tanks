@@ -20,11 +20,11 @@ public class MoveTank {
         tank.setRightSpeed(rightAxisXDelta);
     }
 
-    private static void movement(Tank tank,RelativeCoordinates relativeCoordinates) {
+    private static void movement(Tank tank, RelativeCoordinates relativeCoordinates) {
         if (isTranslating(tank)) {
-            TranslateTank.translate(tank,relativeCoordinates);
+            TranslateTank.translate(tank, relativeCoordinates);
         } else {
-            RotateTank.rotate(tank,relativeCoordinates);
+            RotateTank.rotate(tank, relativeCoordinates);
         }
     }
 

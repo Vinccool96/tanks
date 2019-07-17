@@ -25,13 +25,14 @@ public class App extends Application {
             s.getRoot().requestFocus();
             primaryStage.setScene(s);
             primaryStage.show();
+            controleur.startRunning();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void stop() throws Exception{
+    public void stop() throws Exception {
         controleur.stopRunning();
         super.stop();
     }
