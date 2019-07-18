@@ -35,11 +35,11 @@ public class Controleur {
     private void launch(XInputDevice device) {
         this.running = true;
         Runnable r = () -> {
-            while (this.running) { // while (device.poll() && running) {
+            while (device.poll() && running) {
                 XInputComponents components = device.getComponents();
                 XInputAxes axes = components.getAxes();
-                float leftAxisXDelta = 1.0f; //float leftAxisXDelta = axes.ly;
-                float rightAxisXDelta = -1.0f; //float rightAxisXDelta = axes.ry;
+                float leftAxisXDelta = axes.ly;
+                float rightAxisXDelta = axes.ry;
                 System.out.println("leftAxisXDelta: " + leftAxisXDelta);
                 System.out.println("rightAxisXDelta: " + rightAxisXDelta);
                 relativeCoordinates.reset();
