@@ -9,15 +9,15 @@ public class MoveTank {
 
     public static final double TIME_OF_STEP = 0.1;
 
-    public static void move(Tank tank, float leftAxisXDelta, float rightAxisXDelta,
+    public static void move(Tank tank, float leftAxisY, float rightAxisY,
             RelativeCoordinates relativeCoordinates) {
-        setSpeed(tank, leftAxisXDelta, rightAxisXDelta);
+        setSpeed(tank, leftAxisY, rightAxisY);
         movement(tank, relativeCoordinates);
     }
 
-    private static void setSpeed(Tank tank, float leftAxisXDelta, float rightAxisXDelta) {
-        tank.setLeftSpeed(leftAxisXDelta);
-        tank.setRightSpeed(rightAxisXDelta);
+    private static void setSpeed(Tank tank, float leftAxisY, float rightAxisY) {
+        tank.setLeftSpeed(leftAxisY);
+        tank.setRightSpeed(rightAxisY);
     }
 
     private static void movement(Tank tank, RelativeCoordinates relativeCoordinates) {

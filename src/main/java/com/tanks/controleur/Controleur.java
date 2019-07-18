@@ -5,25 +5,31 @@ import com.github.strikerx3.jxinput.XInputComponents;
 import com.github.strikerx3.jxinput.XInputDevice;
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 import com.tanks.game.MoveTank;
-import javafx.fxml.FXML;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Rectangle;
+import com.tanks.models.PhysicsVector;
 import com.tanks.models.RelativeCoordinates;
 import com.tanks.models.Tank;
 import com.tanks.utils.Angles;
+import javafx.fxml.FXML;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
 
 public class Controleur {
 
     @FXML
-    Rectangle rect;
-    @FXML
     AnchorPane pane;
+
+    @FXML
+    private Rectangle tankBody;
+
     private boolean running;
+
     private Tank tank;
 
     private RelativeCoordinates relativeCoordinates = new RelativeCoordinates();
+
+    private PhysicsVector gunnerLeftAxisVector = new PhysicsVector();
+
+    private PhysicsVector gunnerRightAxisVector = new PhysicsVector();
 
     public Controleur() {
     }
@@ -32,19 +38,35 @@ public class Controleur {
     public void initialize() {
     }
 
-    private void launch(XInputDevice device) {
+    public void startRunning() {
+        initializeTank(tankBody);
+        // Retrieve all
+        XInputDevice[] devices = new XInputDevice[0];
+        try {
+            devices = XInputDevice.getAllDevices();
+        } catch (XInputNotLoadedException e) {
+            e.printStackTrace();
+        }
+
+        // Retrieve the device for player 1
+        XInputDevice driverDevice = devices[0]; // or XInputDevice.getDeviceFor(0)
+
+        // Retrieve the device for player 2
+        XInputDevice gunnerDevice = devices[1]; // or XInputDevice.getDeviceFor(1)
+
+        launch(driverDevice, gunnerDevice);
+    }
+
+    public void stopRunning() {
+        this.running = false;
+    }
+
+    private void launch(XInputDevice driverDevice, XInputDevice gunnerDevice) {
         this.running = true;
         Runnable r = () -> {
-            while (device.poll() && running) {
-                XInputComponents components = device.getComponents();
-                XInputAxes axes = components.getAxes();
-                float leftAxisXDelta = axes.ly;
-                float rightAxisXDelta = axes.ry;
-                System.out.println("leftAxisXDelta: " + leftAxisXDelta);
-                System.out.println("rightAxisXDelta: " + rightAxisXDelta);
-                relativeCoordinates.reset();
-                MoveTank.move(tank, leftAxisXDelta, rightAxisXDelta, relativeCoordinates);
-                toRectangle();
+            while (driverDevice.poll() && gunnerDevice.poll() && running) {
+                driverActions(driverDevice);
+                gunnerActions(gunnerDevice);
                 try {
                     Thread.sleep((long) (MoveTank.TIME_OF_STEP * 1000));
                 } catch (InterruptedException e) {
@@ -55,41 +77,39 @@ public class Controleur {
         new Thread(r).start();
     }
 
-    @FXML
-    public void keyPressed(KeyEvent key) {
-        System.out.println("key pressed");
-        if (key.getCode() == KeyCode.W) {
-            rect.setY(rect.getY() - 1);
-        }
+    private void driverActions(XInputDevice driverDevice){
+        XInputComponents components = driverDevice.getComponents();
+        XInputAxes axes = components.getAxes();
+        float leftAxisY = axes.ly;
+        float rightAxisY = axes.ry;
+        System.out.println("leftAxisY: " + leftAxisY);
+        System.out.println("rightAxisY: " + rightAxisY);
+        relativeCoordinates.reset();
+        MoveTank.move(tank, leftAxisY, rightAxisY, relativeCoordinates);
+        toRectangle();
     }
 
-    private void initializeTank(Rectangle rect) {
-        tank = new Tank(rect.getRotate(), rect.getWidth(), rect.getHeight());
+    private void gunnerActions(XInputDevice gunnerDevice){
+        XInputComponents components = gunnerDevice.getComponents();
+        XInputAxes axes = components.getAxes();
+        double previousLeftOrientation = gunnerLeftAxisVector.getOrientation();
+        double previousRightOrientation = gunnerRightAxisVector.getOrientation();
+        float leftAxisX = axes.lx;
+        float leftAxisY = axes.ly;
+        float rightAxisX = axes.rx;
+        float rightAxisY = axes.ry;
+        gunnerLeftAxisVector.setVectorXY(leftAxisX, leftAxisY);
+        gunnerRightAxisVector.setVectorXY(rightAxisX, rightAxisY);
+    }
+
+    private void initializeTank(Rectangle tankBody) {
+        tank = new Tank(tankBody.getRotate(), tankBody.getWidth(), tankBody.getHeight());
         tank.setLeftSpeed(1.0f);
     }
 
     private void toRectangle() {
-        rect.setRotate(Angles.angle(-tank.getOrientation()));
-        rect.setX(relativeCoordinates.getFxX() + rect.getX());
-        rect.setY(relativeCoordinates.getFxY() + rect.getY());
-    }
-
-    public void startRunning() {
-        initializeTank(rect);
-        // Retrieve all
-        XInputDevice[] devices = new XInputDevice[0];
-        try {
-            devices = XInputDevice.getAllDevices();
-        } catch (XInputNotLoadedException e) {
-            e.printStackTrace();
-        }
-        // Retrieve the device for player 1
-        XInputDevice device = devices[0]; // or XInputDevice.getDeviceFor(0)
-
-        launch(device);
-    }
-
-    public void stopRunning() {
-        this.running = false;
+        tankBody.setRotate(Angles.angle(-tank.getOrientation()));
+        tankBody.setX(relativeCoordinates.getFxX() + tankBody.getX());
+        tankBody.setY(relativeCoordinates.getFxY() + tankBody.getY());
     }
 }

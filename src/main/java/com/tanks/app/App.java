@@ -22,7 +22,6 @@ public class App extends Application {
             Parent root = loader.load();
             controleur = loader.getController();
             Scene s = new Scene(root);
-            s.getRoot().requestFocus();
             primaryStage.setScene(s);
             primaryStage.show();
             controleur.startRunning();

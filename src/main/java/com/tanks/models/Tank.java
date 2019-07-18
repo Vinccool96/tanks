@@ -34,8 +34,8 @@ public class Tank {
         this.leftSpeed = leftSpeed;
     }
 
-    public void setLeftSpeed(float leftAxisXDelta) {
-        double leftSpeed = (((double) leftAxisXDelta) * 10.0);
+    public void setLeftSpeed(float leftAxisY) {
+        double leftSpeed = (((double) leftAxisY) * 10.0);
         double l = leftSpeed - (leftSpeed % 1.0);
         setLeftSpeed(l);
     }
@@ -48,8 +48,8 @@ public class Tank {
         this.rightSpeed = rightSpeed;
     }
 
-    public void setRightSpeed(float rightAxisXDelta) {
-        double rightSpeed = (((double) rightAxisXDelta) * 10.0);
+    public void setRightSpeed(float rightAxisY) {
+        double rightSpeed = (((double) rightAxisY) * 10.0);
         double r = rightSpeed - (rightSpeed % 1.0);
         setRightSpeed(r);
     }
