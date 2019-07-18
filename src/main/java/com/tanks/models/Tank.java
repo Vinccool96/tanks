@@ -1,6 +1,6 @@
-package models;
+package com.tanks.models;
 
-import utils.Angles;
+import com.tanks.utils.Angles;
 
 public class Tank {
     private double orientation = 0.0;

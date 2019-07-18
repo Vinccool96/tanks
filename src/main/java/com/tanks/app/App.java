@@ -1,6 +1,6 @@
-package app;
+package com.tanks.app;
 
-import controleur.Controleur;
+import com.tanks.controleur.Controleur;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

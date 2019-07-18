@@ -1,4 +1,4 @@
-package game.timer;
+package com.tanks.game.timer;
 
 import javafx.animation.AnimationTimer;
 

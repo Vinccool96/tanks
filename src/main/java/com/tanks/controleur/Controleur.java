@@ -1,18 +1,18 @@
-package controleur;
+package com.tanks.controleur;
 
 import com.github.strikerx3.jxinput.XInputAxes;
 import com.github.strikerx3.jxinput.XInputComponents;
 import com.github.strikerx3.jxinput.XInputDevice;
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
-import game.MoveTank;
+import com.tanks.game.MoveTank;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
-import models.RelativeCoordinates;
-import models.Tank;
-import utils.Angles;
+import com.tanks.models.RelativeCoordinates;
+import com.tanks.models.Tank;
+import com.tanks.utils.Angles;
 
 public class Controleur {
 

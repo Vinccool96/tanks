@@ -1,4 +1,4 @@
-package models;
+package com.tanks.models;
 
 public class RelativeCoordinates {
 

@@ -1,9 +1,9 @@
-package game.movement;
+package com.tanks.game.movement;
 
-import game.MoveTank;
-import models.PhysicsVector;
-import models.RelativeCoordinates;
-import models.Tank;
+import com.tanks.game.MoveTank;
+import com.tanks.models.PhysicsVector;
+import com.tanks.models.RelativeCoordinates;
+import com.tanks.models.Tank;
 
 public class RotateTank {
 
