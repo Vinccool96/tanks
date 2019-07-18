@@ -18,8 +18,9 @@ public class Controleur {
     @FXML
     AnchorPane pane;
 
+    @SuppressWarnings("WeakerAccess")
     @FXML
-    private Rectangle tankBody;
+    Rectangle tankBody;
 
     private boolean running;
 
