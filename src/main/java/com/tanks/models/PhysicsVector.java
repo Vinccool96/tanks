@@ -21,13 +21,11 @@ public class PhysicsVector {
         setXY();
     }
 
-    //    public void setVectorXY(double x, double y) {
-    //        this.x = x;
-    //        this.y = y;
-    //        this.orientation = x == 0 ? 90 : x < 0 ? Math.toDegrees(Math.atan(y / x)) + 180 :
-    //                (y < 0 ? Math.toDegrees(Math.atan(y / x)) + 360 : Math.toDegrees(Math.atan(y / x)));
-    //        this.magnitude = Math.pow(x * x + y * y, 0.5);
-    //    }
+    public void setVectorXY(double x, double y) {
+        this.x = x;
+        this.y = y;
+        setOM();
+    }
 
     public double getOrientation() {
         return orientation;
@@ -51,23 +49,19 @@ public class PhysicsVector {
         return x;
     }
 
-    //    public void setX(double x) {
-    //        this.x = x;
-    //        this.orientation = x == 0 ? 90 : x < 0 ? Math.toDegrees(Math.atan(this.y / x)) + 180 :
-    //                (this.y < 0 ? Math.toDegrees(Math.atan(this.y / x)) + 360 : Math.toDegrees(Math.atan(this.y / x)));
-    //        this.magnitude = Math.pow(x * x + this.y * this.y, 0.5);
-    //    }
+    public void setX(double x) {
+        this.x = x;
+        setOM();
+    }
 
     public double getY() {
         return y;
     }
 
-    //    public void setY(double y) {
-    //        this.y = y;
-    //        this.orientation = this.x == 0 ? 90 : this.x < 0 ? Math.toDegrees(Math.atan(y / this.x)) + 180 :
-    //                (y < 0 ? Math.toDegrees(Math.atan(y / this.x)) + 360 : Math.toDegrees(Math.atan(y / this.x)));
-    //        this.magnitude = Math.pow(this.x * this.x + y * y, 0.5);
-    //    }
+    public void setY(double y) {
+        this.y = y;
+        setOM();
+    }
 
     public void turn180Degrees() {
         double newOrientation = this.orientation + 180;
@@ -80,5 +74,10 @@ public class PhysicsVector {
 
         double yTemp = this.magnitude * Math.sin(Math.toRadians(this.orientation));
         this.y = yTemp - (yTemp % 1E-11);
+    }
+
+    private void setOM(){
+        this.orientation = Angles.fromXY(this.x, this.y);
+        this.magnitude = Math.pow(this.x * this.x + this.y * this.y, 0.5);
     }
 }
