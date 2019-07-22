@@ -24,6 +24,9 @@ public class Controleur {
     @FXML
     Rectangle tankBody;
 
+    @FXML
+    Rectangle tankTurret;
+
     private boolean running;
 
     private Tank tank;
@@ -43,6 +46,10 @@ public class Controleur {
         tankBody.setStroke(Color.TRANSPARENT);
         Image imageTankBody = new Image("/images/tank_body.png");
         tankBody.setFill(new ImagePattern(imageTankBody));
+        tankTurret.setStrokeWidth(0.0);
+        tankTurret.setStroke(Color.TRANSPARENT);
+        Image imageTankTurret = new Image("/images/tank_turret_uncropped.png");
+        tankTurret.setFill(new ImagePattern(imageTankTurret));
     }
 
     public void startRunning() {
