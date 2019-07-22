@@ -1,6 +1,6 @@
-package com.tanks.game.movement;
+package com.tanks.events.movement;
 
-import com.tanks.models.Tank;
+import com.tanks.models.game.Tank;
 import org.junit.Before;
 import org.junit.Test;
 

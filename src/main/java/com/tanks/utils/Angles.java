@@ -33,4 +33,14 @@ public class Angles {
         }
         return result;
     }
+
+    public static double angularDelta(double previous, double current) {
+        double delta = current - previous;
+        if (delta > 180.0) {
+            delta -= 360.0;
+        } else if (delta < -180.0) {
+            delta += 360.0;
+        }
+        return delta;
+    }
 }

@@ -1,4 +1,4 @@
-package com.tanks.game.movement;
+package com.tanks.events.movement;
 
 import org.junit.Before;
 import org.junit.Test;

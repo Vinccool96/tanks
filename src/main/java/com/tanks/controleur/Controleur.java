@@ -4,13 +4,16 @@ import com.github.strikerx3.jxinput.XInputAxes;
 import com.github.strikerx3.jxinput.XInputComponents;
 import com.github.strikerx3.jxinput.XInputDevice;
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
-import com.tanks.game.MoveTank;
-import com.tanks.models.PhysicsVector;
-import com.tanks.models.RelativeCoordinates;
-import com.tanks.models.Tank;
+import com.tanks.events.MoveTank;
+import com.tanks.models.physics.PhysicsVector;
+import com.tanks.models.physics.RelativeCoordinates;
+import com.tanks.models.game.Tank;
 import com.tanks.utils.Angles;
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class Controleur {
@@ -18,7 +21,6 @@ public class Controleur {
     @FXML
     AnchorPane pane;
 
-    @SuppressWarnings("WeakerAccess")
     @FXML
     Rectangle tankBody;
 
@@ -37,6 +39,10 @@ public class Controleur {
 
     @FXML
     public void initialize() {
+        tankBody.setStrokeWidth(0.0);
+        tankBody.setStroke(Color.TRANSPARENT);
+        Image imageTankBody = new Image("/images/tank_body.png");
+        tankBody.setFill(new ImagePattern(imageTankBody));
     }
 
     public void startRunning() {
@@ -101,6 +107,10 @@ public class Controleur {
         float rightAxisY = axes.ry;
         gunnerLeftAxisVector.setVectorXY(leftAxisX, leftAxisY);
         gunnerRightAxisVector.setVectorXY(rightAxisX, rightAxisY);
+        double currentLeftOrientation = gunnerLeftAxisVector.getOrientation();
+        double currentRightOrientation = gunnerRightAxisVector.getOrientation();
+        double leftAxisOrientationDelta = Angles.angularDelta(previousLeftOrientation, currentLeftOrientation);
+        double rightAxisOrientationDelta = Angles.angularDelta(previousRightOrientation, currentRightOrientation);
     }
 
     private void initializeTank(Rectangle tankBody) {

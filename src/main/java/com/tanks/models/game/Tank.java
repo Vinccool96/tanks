@@ -1,4 +1,4 @@
-package com.tanks.models;
+package com.tanks.models.game;
 
 import com.tanks.utils.Angles;
 

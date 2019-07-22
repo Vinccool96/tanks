@@ -1,9 +1,9 @@
-package com.tanks.game.movement;
+package com.tanks.events.movement;
 
-import com.tanks.game.MoveTank;
-import com.tanks.models.PhysicsVector;
-import com.tanks.models.RelativeCoordinates;
-import com.tanks.models.Tank;
+import com.tanks.events.MoveTank;
+import com.tanks.models.physics.PhysicsVector;
+import com.tanks.models.physics.RelativeCoordinates;
+import com.tanks.models.game.Tank;
 
 public class TranslateTank {
 
